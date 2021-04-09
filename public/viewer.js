@@ -10,13 +10,7 @@ async function init() {
 }
 
 function createPeer() {
-  const peer = new RTCPeerConnection({
-    iceServers: [
-      {
-        urls: "stun:stun.stunprotocol.org",
-      },
-    ],
-  });
+  const peer = new RTCPeerConnection();
   peer.ontrack = handleTrackEvent;
   peer.onnegotiationneeded = () => handleNegotiationNeededEvent(peer);
 
