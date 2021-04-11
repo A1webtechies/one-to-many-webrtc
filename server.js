@@ -30,7 +30,13 @@ app.post("/consumer", async ({ body }, res) => {
 });
 
 app.post('/broadcast', async ({ body }, res) => {
-    const peer = new webrtc.RTCPeerConnection();
+    const peer = new webrtc.RTCPeerConnection({
+  iceServers: [
+    {
+      urls: ["stun:stun.l.google.com:19302"]
+    }
+  ]
+});
     peer.ontrack = (e) => handleTrackEvent(e, peer);
     const desc = new webrtc.RTCSessionDescription(body.sdp);
     await peer.setRemoteDescription(desc);
