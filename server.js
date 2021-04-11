@@ -10,7 +10,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/consumer", async ({ body }, res) => {
-    const peer = new webrtc.RTCPeerConnection();
+    const peer = new webrtc.RTCPeerConnection({
+  iceServers: [
+    {
+      urls: ["stun:stun.l.google.com:19302"]
+    }
+  ]
+});
     const desc = new webrtc.RTCSessionDescription(body.sdp);
     await peer.setRemoteDescription(desc);
     senderStream.getTracks().forEach(track => peer.addTrack(track, senderStream));
